@@ -1,6 +1,7 @@
 package xo
+
 // Xo is an attempt to continue research done by Rob Pike on
-// structural regular expressions. 
+// structural regular expressions.
 
 import (
 	"bufio"
@@ -14,9 +15,9 @@ import (
 )
 
 /*
-	TODO: 
+	TODO:
     xo  -l TODO *.go
- */
+*/
 
 type Xo struct {
 	list         []*regexp.Regexp
@@ -32,13 +33,13 @@ type Xo struct {
 	lastfn       func(re *regexp.Regexp) (err error)
 	Line0, Line1 int64
 	err          error // next read returns EOF`
-	y []byte
-	x []byte
+	y            []byte
+	x            []byte
 
 	cmd []cmd
 }
 
-func (r Xo) Err() error{ return r.err }
+func (r Xo) Err() error { return r.err }
 
 // NewReaderString returns an Xo initialized to execute
 // commands from the contents of string s.
@@ -64,13 +65,13 @@ func NewReaderString(in io.Reader, flags string, s string) (*Xo, error) {
 //
 // TODO: Substitute loose slices for dot in the package
 //
-type Dot struct{
+type Dot struct {
 	P0, P1 int
-	val []byte
+	val    []byte
 }
 
 // NewReader returns an Xo initialized to execute
-// command list c. 
+// command list c.
 func NewReader(in io.Reader, flags string, c ...cmd) *Xo {
 	r := &Xo{
 		in:  in,
@@ -282,7 +283,7 @@ func (r *Xo) Structure() (out []byte, n int, err error) {
 	r.y = append([]byte{}, y...)
 	// fmt.Printf("y is %q\n" , string(r.y))
 	r.cnt.Write(r.y)
-	
+
 	r.Line0 = r.cnt.Seen()
 
 	r.x = r.buf.Next(r.dot[1] - r.dot[0])
@@ -300,7 +301,7 @@ func (r *Xo) Structure() (out []byte, n int, err error) {
 
 // X returns the Dot selected by the last
 // call to Structure().
-func (r *Xo) X() []byte{
+func (r *Xo) X() []byte {
 	return r.x
 }
 
@@ -311,7 +312,7 @@ func (r *Xo) X() []byte{
 // every byte leading up to X(), but not after.
 //
 // TODO: See above
-func (r *Xo) Y() []byte{
+func (r *Xo) Y() []byte {
 	return r.y
 }
 

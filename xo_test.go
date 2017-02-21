@@ -320,7 +320,7 @@ func TestNonUniform(t *testing.T) {
 	r, err := NewReaderString(spaz.NewReader([]byte(in)), "", re)
 	for i, exln := range ex {
 		ln, _, err := r.Structure()
-		fmt.Printf("%q\n",ln)
+		fmt.Printf("%q\n", ln)
 		if err != nil && err != io.EOF {
 			t.Logf("TestNonUniform: %s", err)
 			t.Fail()
