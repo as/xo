@@ -8,7 +8,6 @@ import (
 	"fmt"
 	"io"
 	"regexp"
-	"runtime"
 
 	"github.com/as/io/count"
 	"github.com/as/io/rev"
@@ -70,20 +69,13 @@ type Dot struct{
 	val []byte
 }
 
-var NL = func() string {
-	if runtime.GOOS == "windows" {
-		return "\r\n"
-	}
-	return "\n"
-}()
-
 // NewReader returns an Xo initialized to execute
 // command list c. 
 func NewReader(in io.Reader, flags string, c ...cmd) *Xo {
 	r := &Xo{
 		in:  in,
 		buf: new(bytes.Buffer),
-		cnt: count.NewWriter(NL),
+		cnt: count.NewWriter("\n"),
 	}
 	if len(c) == 0 {
 		return nil
